@@ -1,7 +1,7 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -82,7 +82,7 @@ export class UserService {
     const loginInfo = await this.loginRepository.findOne({
       where: { msisdn: msisdn, code: codeNum },
     });
-    if (!loginInfo) throw new UnauthorizedException('Invalid Code!');
+    if (!loginInfo) throw new BadRequestException('Invalid Code!');
 
     const payload = { msisdn: msisdn, createdAt: loginInfo.createdAt };
     const accessToken = await this.jwtService.sign(payload);

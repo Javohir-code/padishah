@@ -44,9 +44,10 @@ CREATE TABLE `SubCategoryMast` (
 
 CREATE TABLE `StoreMast` (
     `storeId` int AUTO_INCREMENT NOT NULL,
+    `name` varchar(50) NULL,
     `msisdn` varchar(50) NULL,
     `telegram` varchar(50) NULL,
-    `address` LONGTEXT NULL,
+    `addresses` LONGTEXT NULL,
     `createdAt` datetime NULL,
     CONSTRAINT `PK_StoreMast` PRIMARY KEY 
     (

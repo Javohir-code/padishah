@@ -1,0 +1,5 @@
+export enum ProductStatus {
+  IN_PROGRESS = 'IN_PROGRESS',
+  UNDELIVERED = 'UNDELIVERED',
+  DELIVERED = 'DELIVERED',
+}

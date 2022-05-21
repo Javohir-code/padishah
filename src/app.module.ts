@@ -14,6 +14,7 @@ import { SubCategoryEntity } from './subcategory/entities/subcategory.entity';
 import { LoginEntity } from './user/entities/login.entity';
 import { AdminEntity } from './admin/entities/admin.entity';
 import { StoreEntity } from './store/entities/store.entity';
+import { ProductEntity } from './product/entities/product.entity';
 
 const entities = [
   UserEntity,
@@ -22,6 +23,7 @@ const entities = [
   LoginEntity,
   AdminEntity,
   StoreEntity,
+  ProductEntity,
 ];
 
 @Module({

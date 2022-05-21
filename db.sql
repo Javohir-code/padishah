@@ -55,6 +55,8 @@ CREATE TABLE `StoreMast` (
     )
 );
 
+/***** Table:  LoginInfo *******/
+
 CREATE TABLE `LoginInfo` (
     `loginId` int AUTO_INCREMENT NOT NULL,
     `msisdn` varchar(50) NULL,
@@ -66,6 +68,7 @@ CREATE TABLE `LoginInfo` (
     )
 );
 
+/***** Table:  AdminMast *******/
 
 CREATE TABLE `AdminMast` (
     `id` int AUTO_INCREMENT NOT NULL,
@@ -77,5 +80,34 @@ CREATE TABLE `AdminMast` (
     CONSTRAINT `PK_AdminMast` PRIMARY KEY
     (
         `id` ASC
+    )
+);
+
+/***** Table:  ProductMast *******/
+CREATE TABLE `ProductMast` (
+    `productId` int AUTO_INCREMENT NOT NULL,
+    `storeId` int NULL,
+    `storeName` varchar(50) NULL,
+    `photos` longtext NULL,
+    `colors` longtext NULL,
+    `vendorCode` int NULL,
+    `productName` varchar(50) NULL,
+    `gender` varchar(50) NULL,
+    `msisdn` varchar(50) NULL,
+    `telegram` varchar(50) NULL,
+    `storeAddress` longtext NULL,
+    `deliveryCost` int NULL,
+    `remainProducts` int NULL,
+    `price` int NULL,
+    `size` longtext NULL,
+    `statusProduct` varchar(50) NOT NULL,
+    `statusPayment` varchar(50) NOT NULL,
+    `material` varchar(255) NULL,
+    `manufacturerCountry` varchar(50) NULL,
+    `metadata` longtext NULL,
+    `createdAt` datetime NULL,
+    CONSTRAINT `PK_ProductMast` PRIMARY KEY
+    (
+        `productId` ASC
     )
 );

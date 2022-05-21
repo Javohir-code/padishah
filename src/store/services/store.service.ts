@@ -16,4 +16,11 @@ export class StoreService {
 
     return store;
   }
+
+  async getStoreList(): Promise<StoreEntity[]> {
+    const stores = await this.storeRepository.find({
+      order: { createdAt: -1 },
+    });
+    return stores;
+  }
 }

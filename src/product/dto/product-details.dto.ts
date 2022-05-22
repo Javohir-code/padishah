@@ -10,6 +10,14 @@ import { Gender } from '../enums/gender.enum';
 export class ProductDetailsDto {
   @IsNumber()
   @IsNotEmpty()
+  categoryId: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  subCategoryId: number;
+
+  @IsNumber()
+  @IsNotEmpty()
   storeId: number;
 
   @IsString()

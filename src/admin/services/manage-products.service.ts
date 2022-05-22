@@ -36,6 +36,8 @@ export class ManageProductsService {
       keys.push(uploadedResult.Key);
     }
     const newProduct = await this.productRepository.create();
+    newProduct.categoryId = productDetailsDto.categoryId;
+    newProduct.subCategoryId = productDetailsDto.subCategoryId;
     newProduct.storeId = productDetailsDto.storeId;
     newProduct.storeName = productDetailsDto.storeName;
     newProduct.photos = JSON.stringify(images);

@@ -9,6 +9,12 @@ export class ProductEntity {
   productId: number;
 
   @Column()
+  categoryId: number;
+
+  @Column()
+  subCategoryId: number;
+
+  @Column()
   storeId: number;
 
   @Column()

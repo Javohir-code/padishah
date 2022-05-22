@@ -86,6 +86,8 @@ CREATE TABLE `AdminMast` (
 /***** Table:  ProductMast *******/
 CREATE TABLE `ProductMast` (
     `productId` int AUTO_INCREMENT NOT NULL,
+    `categoryId` int NULL,
+    `subCategoryId` int NULL,
     `storeId` int NULL,
     `storeName` varchar(50) NULL,
     `photos` longtext NULL,

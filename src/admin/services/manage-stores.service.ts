@@ -14,7 +14,11 @@ export class ManageStoresService {
   ) {}
 
   async addStore(storeDetailsDto: StoreDetailsDto): Promise<StoreEntity> {
-    const newStore = await this.storeRepository.create(storeDetailsDto);
+    const newStore = await this.storeRepository.create();
+    newStore.name = storeDetailsDto.name;
+    newStore.msisdn = storeDetailsDto.msisdn;
+    newStore.telegram = storeDetailsDto.telegram;
+    newStore.addresses = JSON.stringify(storeDetailsDto.addresses);
     await this.storeRepository.save(newStore);
     return newStore;
   }

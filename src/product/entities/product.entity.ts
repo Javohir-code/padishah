@@ -1,8 +1,7 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-import { ProductStatus } from '../enums/product-status.enum';
-import { PaymentStatus } from './payment-status.enum';
 import * as moment from 'moment';
+import { Gender } from '../enums/gender.enum';
 
 @Entity({ name: 'ProductMast' })
 export class ProductEntity {
@@ -19,6 +18,9 @@ export class ProductEntity {
   photos: string;
 
   @Column()
+  keys: string;
+
+  @Column()
   colors: string;
 
   @Column()
@@ -28,7 +30,7 @@ export class ProductEntity {
   productName: string;
 
   @Column()
-  gender: string;
+  gender: Gender;
 
   @Column()
   msisdn: string;
@@ -50,12 +52,6 @@ export class ProductEntity {
 
   @Column()
   size: string;
-
-  @Column()
-  statusProduct: ProductStatus;
-
-  @Column()
-  statusPayment: PaymentStatus;
 
   @Column()
   material: string;

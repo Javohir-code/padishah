@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoryModule } from 'src/category/category.module';
+import { ProductModule } from 'src/product/product.module';
 import { StoreModule } from 'src/store/store.module';
 import { SubCategoryModule } from 'src/subcategory/subcategory.module';
 import { UserModule } from 'src/user/user.module';
@@ -20,10 +21,11 @@ import { ManageStoresService } from './services/manage-stores.service';
 import { ManageSubCategoriesService } from './services/manage-subcategories.service';
 import { ManageUsersService } from './services/manage-users.service';
 import { AdminJwtStrategy } from './strategies/admin-jwt.strategy';
+import configuration from '../global/config/config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({ load: [configuration] }),
     TypeOrmModule.forFeature([AdminEntity]),
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -39,6 +41,7 @@ import { AdminJwtStrategy } from './strategies/admin-jwt.strategy';
     CategoryModule,
     SubCategoryModule,
     StoreModule,
+    ProductModule,
   ],
   controllers: [
     AdminController,

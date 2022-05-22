@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class StoreDetailsDto {
   @IsString()
@@ -13,7 +13,7 @@ export class StoreDetailsDto {
   @IsNotEmpty()
   telegram: string;
 
-  @IsString()
+  @IsArray()
   @IsNotEmpty()
-  addresses: string;
+  addresses: Array<string>;
 }

@@ -3,13 +3,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryDto } from 'src/category/dto/category.dto';
 import { CategoryEntity } from 'src/category/entities/category.entity';
 import { CategoryService } from 'src/category/services/category.service';
-import { Repository } from 'typeorm';
+import { SubCategoryEntity } from 'src/subcategory/entities/subcategory.entity';
+import { In, Repository } from 'typeorm';
 
 @Injectable()
 export class ManageCategoriesService {
   constructor(
     @InjectRepository(CategoryEntity)
     private categoryRepository: Repository<CategoryEntity>,
+    @InjectRepository(SubCategoryEntity)
+    private subCategoryRepository: Repository<SubCategoryEntity>,
     private categoryService: CategoryService,
   ) {}
 
@@ -22,5 +25,8 @@ export class ManageCategoriesService {
   async removeCategory(categoryId: number): Promise<void> {
     const category = await this.categoryService.getCategoryById(categoryId);
     await this.categoryRepository.delete(category.categoryId);
+    await this.subCategoryRepository.delete({
+      categoryId: In([category.categoryId]),
+    });
   }
 }

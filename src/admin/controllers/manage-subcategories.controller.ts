@@ -20,7 +20,7 @@ export class ManageSubCategoriesController {
   @UseGuards(AdminJwtAuthGuard)
   async addSubCategory(
     @Body() subCategoryDto: SubCategoryDto,
-  ): Promise<SubCategoryEntity> {
+  ): Promise<SubCategoryEntity[]> {
     return await this.manageSubCategoriesService.addSubCategory(subCategoryDto);
   }
 

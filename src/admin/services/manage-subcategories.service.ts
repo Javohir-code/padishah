@@ -15,12 +15,12 @@ export class ManageSubCategoriesService {
 
   async addSubCategory(
     subCategoryDto: SubCategoryDto,
-  ): Promise<SubCategoryEntity> {
+  ): Promise<SubCategoryEntity[]> {
     const newSubCategory = await this.subCategoryRepository.create(
       subCategoryDto,
     );
-    await this.subCategoryRepository.save(newSubCategory);
-    return newSubCategory;
+    await this.subCategoryRepository.insert(newSubCategory);
+    return [newSubCategory];
   }
 
   async removeSubCategory(subCategoryId: number): Promise<void> {

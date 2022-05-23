@@ -15,6 +15,8 @@ import { LoginEntity } from './user/entities/login.entity';
 import { AdminEntity } from './admin/entities/admin.entity';
 import { StoreEntity } from './store/entities/store.entity';
 import { ProductEntity } from './product/entities/product.entity';
+import { OrderModule } from './order/order.module';
+import { OrderEntity } from './order/entities/order.entity';
 
 const entities = [
   UserEntity,
@@ -24,6 +26,7 @@ const entities = [
   AdminEntity,
   StoreEntity,
   ProductEntity,
+  OrderEntity,
 ];
 
 @Module({
@@ -49,6 +52,7 @@ const entities = [
     StoreModule,
     CategoryModule,
     SubCategoryModule,
+    OrderModule,
   ],
   controllers: [],
   providers: [],

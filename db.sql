@@ -84,6 +84,7 @@ CREATE TABLE `AdminMast` (
 );
 
 /***** Table:  ProductMast *******/
+
 CREATE TABLE `ProductMast` (
     `productId` int AUTO_INCREMENT NOT NULL,
     `categoryId` int NULL,
@@ -110,5 +111,20 @@ CREATE TABLE `ProductMast` (
     CONSTRAINT `PK_ProductMast` PRIMARY KEY
     (
         `productId` ASC
+    )
+);
+
+/***** Table:  OrderMast *******/
+CREATE TABLE `OrderMast` (
+    `orderId` int AUTO_INCREMENT NOT NULL,
+    `userId` int NULL,
+    `orders` longtext NULL,
+    `totalPrice` int NULL,
+    `paymentStatus` varchar(50) NULL,
+    `productStatus` varchar(50) NULL,
+    `createdAt` datetime NULL,
+    CONSTRAINT `PK_OrderMast` PRIMARY KEY 
+    (
+        `orderId` ASC
     )
 );

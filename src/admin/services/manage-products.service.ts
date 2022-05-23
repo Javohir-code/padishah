@@ -7,6 +7,7 @@ import { PhotosDto } from 'src/product/dto/photo.dto';
 import { ProductDetailsDto } from 'src/product/dto/product-details.dto';
 import { ProductEntity } from 'src/product/entities/product.entity';
 import { Repository } from 'typeorm';
+import { ProductService } from 'src/product/services/product.service';
 
 @Injectable()
 export class ManageProductsService {
@@ -16,6 +17,7 @@ export class ManageProductsService {
     @InjectAwsService(S3)
     private readonly s3Service: S3,
     private readonly configService: ConfigService,
+    private productService: ProductService,
   ) {}
 
   async addProduct(
@@ -58,5 +60,10 @@ export class ManageProductsService {
 
     await this.productRepository.save(newProduct);
     return newProduct;
+  }
+
+  async deleteProduct(productId: number): Promise<void> {
+    const product = await this.productService.getProductById(productId);
+    await this.productRepository.delete(product.productId);
   }
 }

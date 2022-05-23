@@ -1,6 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
+  Param,
+  ParseIntPipe,
   Post,
   UploadedFiles,
   UseGuards,
@@ -27,5 +30,13 @@ export class ManageProductsController {
       files,
       productDetailsDto,
     );
+  }
+
+  @Delete('admin/product/:productId')
+  @UseGuards(AdminJwtAuthGuard)
+  async deleteProduct(
+    @Param('productId', ParseIntPipe) productId: number,
+  ): Promise<void> {
+    await this.manageProductsService.deleteProduct(productId);
   }
 }

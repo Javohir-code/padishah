@@ -1,5 +1,6 @@
 import {
   IsArray,
+  IsIn,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -37,6 +38,7 @@ export class ProductDetailsDto {
   productName: string;
 
   @IsString()
+  @IsIn([Gender.male, Gender.female])
   @IsNotEmpty()
   gender: Gender;
 

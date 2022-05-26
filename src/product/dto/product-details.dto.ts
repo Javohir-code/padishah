@@ -25,6 +25,10 @@ export class ProductDetailsDto {
   @IsNotEmpty()
   storeName: string;
 
+  @IsString()
+  @IsNotEmpty()
+  description: string;
+
   @IsArray()
   @IsNotEmpty()
   colors: Array<string>;
@@ -65,6 +69,9 @@ export class ProductDetailsDto {
   @IsNumber()
   @IsNotEmpty()
   price: number;
+
+  @IsOptional()
+  salePrice: number;
 
   @IsArray()
   @IsNotEmpty()

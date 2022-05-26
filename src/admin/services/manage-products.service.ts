@@ -42,6 +42,7 @@ export class ManageProductsService {
     newProduct.subCategoryId = productDetailsDto.subCategoryId;
     newProduct.storeId = productDetailsDto.storeId;
     newProduct.storeName = productDetailsDto.storeName;
+    newProduct.description = productDetailsDto.description;
     newProduct.photos = JSON.stringify(images);
     newProduct.keys = JSON.stringify(keys);
     newProduct.colors = JSON.stringify(productDetailsDto.colors);
@@ -54,6 +55,7 @@ export class ManageProductsService {
     newProduct.deliveryCost = productDetailsDto.deliveryCost;
     newProduct.remainProducts = productDetailsDto.remainProducts;
     newProduct.price = productDetailsDto.price;
+    newProduct.salePrice = productDetailsDto?.salePrice;
     newProduct.size = JSON.stringify(productDetailsDto.size);
     newProduct.material = productDetailsDto.material;
     newProduct.manufacturerCountry = productDetailsDto.manufacturerCountry;

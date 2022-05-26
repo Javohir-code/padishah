@@ -8,9 +8,10 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('add-details')
-  async addUser(@Body() userDetailsDto: UserDetailsDto): Promise<UserEntity> {
-    const user = await this.userService.addUser(userDetailsDto);
-    return user;
+  async addUser(
+    @Body() userDetailsDto: UserDetailsDto,
+  ): Promise<{ user: UserEntity; accessToken: string }> {
+    return await this.userService.addUser(userDetailsDto);
   }
 
   @Post('login')

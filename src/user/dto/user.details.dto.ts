@@ -27,7 +27,7 @@ export class UserDetailsDto {
 
   @IsString()
   @MinLength(5)
-  @MaxLength(50)
+  @MaxLength(100)
   @IsNotEmpty()
   address: string;
 

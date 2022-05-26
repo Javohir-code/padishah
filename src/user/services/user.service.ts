@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -24,10 +25,17 @@ export class UserService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async addUser(userDetailsDto: UserDetailsDto): Promise<UserEntity> {
-    const newUser = await this.userRepository.create(userDetailsDto);
-    const user = await this.userRepository.save(newUser);
-    return user;
+  async addUser(
+    userDetailsDto: UserDetailsDto,
+  ): Promise<{ user: UserEntity; accessToken: string }> {
+    const foundUser = await this.findUserMsisdnWise(userDetailsDto.msisdn);
+    if (foundUser == true) {
+      const newUser = await this.userRepository.create(userDetailsDto);
+      const user = await this.userRepository.save(newUser);
+      const payload = { msisdn: user.msisdn };
+      const accessToken = await this.jwtService.sign(payload);
+      return { user: user, accessToken: accessToken };
+    }
   }
 
   async findUser(userId: number): Promise<UserEntity> {
@@ -84,7 +92,7 @@ export class UserService {
     });
     if (!loginInfo) throw new BadRequestException('Invalid Code!');
 
-    const payload = { msisdn: msisdn, createdAt: loginInfo.createdAt };
+    const payload = { msisdn: msisdn };
     const accessToken = await this.jwtService.sign(payload);
     const result = await this.loginRepository.delete(loginInfo.loginId);
     if (result.affected === 0) {
@@ -93,5 +101,13 @@ export class UserService {
       );
     }
     return { accessToken };
+  }
+
+  private async findUserMsisdnWise(msisdn: string): Promise<boolean> {
+    const user = await this.userRepository.findOneBy({ msisdn });
+    if (user) {
+      throw new ConflictException('Please enter another phone number');
+    }
+    return true;
   }
 }

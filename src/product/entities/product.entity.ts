@@ -21,6 +21,9 @@ export class ProductEntity {
   storeName: string;
 
   @Column()
+  description: string;
+
+  @Column()
   photos: string;
 
   @Column()
@@ -55,6 +58,9 @@ export class ProductEntity {
 
   @Column()
   price: number;
+
+  @Column()
+  salePrice: number;
 
   @Column()
   size: string;

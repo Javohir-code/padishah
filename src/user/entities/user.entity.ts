@@ -10,7 +10,7 @@ export class UserEntity {
   @Column()
   fullName: string;
 
-  @Column()
+  @Column({ unique: true })
   msisdn: string;
 
   @Column()
@@ -22,7 +22,7 @@ export class UserEntity {
   @Column()
   address: string;
 
-  @Column()
+  @Column({ default: null })
   address2: string;
 
   @Column()

@@ -7,6 +7,7 @@ import { UserService } from './services/user.service';
 import configuration from '../global/config/config';
 import { JwtModule } from '@nestjs/jwt';
 import { LoginEntity } from './entities/login.entity';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { LoginEntity } from './entities/login.entity';
     }),
   ],
   controllers: [UserController],
-  providers: [UserService],
+  providers: [UserService, JwtStrategy],
   exports: [TypeOrmModule.forFeature([UserEntity, LoginEntity]), UserService],
 })
 export class UserModule {}

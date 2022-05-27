@@ -14,7 +14,6 @@ export class OrderDetailsDto {
 
   @IsString()
   @IsIn([PaymentStatus.unpaid, PaymentStatus.pending, PaymentStatus.paid])
-  @IsNotEmpty()
   paymentStatus: PaymentStatus;
 
   @IsString()

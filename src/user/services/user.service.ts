@@ -110,4 +110,14 @@ export class UserService {
     }
     return true;
   }
+
+  async findUserByMsisdn(msisdn: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: { msisdn: msisdn },
+    });
+    if (!user) {
+      throw new NotFoundException('user not found with given phone number');
+    }
+    return user;
+  }
 }

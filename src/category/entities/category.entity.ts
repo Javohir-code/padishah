@@ -11,6 +11,12 @@ export class CategoryEntity {
   name: string;
 
   @Column()
+  icon: string;
+
+  @Column()
+  key: string;
+
+  @Column()
   createdAt: string;
 
   // HOOKS

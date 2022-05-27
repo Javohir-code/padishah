@@ -20,6 +20,8 @@ CREATE TABLE `UserMast` (
 CREATE TABLE `CategoryMast` (
     `categoryId` int AUTO_INCREMENT NOT NULL,
     `name` varchar(50) NULL,
+    `icon` varchar(100) NULL,
+    `key` varchar(100) NULL,
     `createdAt` datetime NULL,
     CONSTRAINT `PK_CategoryMast` PRIMARY KEY 
     (

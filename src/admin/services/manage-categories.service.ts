@@ -44,6 +44,14 @@ export class ManageCategoriesService {
 
   async removeCategory(categoryId: number): Promise<void> {
     const category = await this.categoryService.getCategoryById(categoryId);
+    if (category) {
+      await this.s3Service
+        .deleteObject({
+          Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
+          Key: category.key.substring(6),
+        })
+        .promise();
+    }
     await this.categoryRepository.delete(category.categoryId);
     await this.subCategoryRepository.delete({
       categoryId: In([category.categoryId]),

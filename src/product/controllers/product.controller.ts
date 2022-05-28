@@ -1,4 +1,5 @@
-import { Controller, Get, Param, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
+import { PaginationParams } from 'src/global/dto/pagination.dto';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductService } from '../services/product.service';
 
@@ -7,8 +8,10 @@ export class ProductController {
   constructor(private productService: ProductService) {}
 
   @Get('products-list')
-  async getProductsList(): Promise<ProductEntity[]> {
-    return await this.productService.getProductsList();
+  async getProductsList(
+    @Query() { page, limit }: PaginationParams,
+  ): Promise<ProductEntity[] | { products: ProductEntity[]; count: number }> {
+    return await this.productService.getProductsList(page, limit);
   }
 
   @Get(':productId')

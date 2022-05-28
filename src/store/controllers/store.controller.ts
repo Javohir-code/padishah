@@ -1,4 +1,5 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Controller, Get, Post, Query } from '@nestjs/common';
+import { PaginationParams } from 'src/global/dto/pagination.dto';
 import { StoreEntity } from '../entities/store.entity';
 import { StoreService } from '../services/store.service';
 
@@ -7,7 +8,9 @@ export class StoreController {
   constructor(private storeService: StoreService) {}
 
   @Get('store-list')
-  async getStoreList(): Promise<StoreEntity[]> {
-    return await this.storeService.getStoreList();
+  async getStoreList(
+    @Query() { page, limit }: PaginationParams,
+  ): Promise<StoreEntity[] | { stores: StoreEntity[]; count: number }> {
+    return await this.storeService.getStoreList(page, limit);
   }
 }

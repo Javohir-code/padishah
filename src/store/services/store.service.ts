@@ -17,10 +17,19 @@ export class StoreService {
     return store;
   }
 
-  async getStoreList(): Promise<StoreEntity[]> {
-    const stores = await this.storeRepository.find({
-      order: { createdAt: -1 },
+  async getStoreList(
+    page?: number,
+    limit?: number,
+  ): Promise<StoreEntity[] | { stores: StoreEntity[]; count: number }> {
+    if (!page && !limit) {
+      return await this.storeRepository.find({ order: { createdAt: 'DESC' } });
+    }
+    const stores = await this.storeRepository.findAndCount({
+      order: { createdAt: 'DESC' },
+      skip: limit * (page - 1),
+      take: limit,
     });
-    return stores;
+
+    return { stores: stores[0], count: stores[1] };
   }
 }

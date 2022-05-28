@@ -12,9 +12,19 @@ export class ManageUsersService {
     private userService: UserService,
   ) {}
 
-  async getUsers(): Promise<UserEntity[]> {
-    const users = await this.userRepository.find();
-    return users;
+  async getUsers(
+    page?: number,
+    limit?: number,
+  ): Promise<UserEntity[] | { users: UserEntity[]; count: number }> {
+    if (!page && !limit) {
+      return await this.userRepository.find({ order: { createdAt: 'DESC' } });
+    }
+    const users = await this.userRepository.findAndCount({
+      order: { createdAt: 'DESC' },
+      skip: limit * (page - 1),
+      take: limit,
+    });
+    return { users: users[0], count: users[1] };
   }
 
   async removeUser(userId: number): Promise<void> {

@@ -22,12 +22,23 @@ export class ManageOrdersService {
     return order;
   }
 
-  async getOrderList(): Promise<OrderEntity[]> {
-    const orders = await this.orderRepository.find({
-      order: { createdAt: -1 },
+  async getOrderList(
+    page?: number,
+    limit?: number,
+  ): Promise<OrderEntity[] | { orders: OrderEntity[]; count: number }> {
+    if (!page && !limit) {
+      return await this.orderRepository.find({
+        order: { createdAt: 'DESC' },
+      });
+    }
+
+    const orders = await this.orderRepository.findAndCount({
+      order: { createdAt: 'DESC' },
+      skip: limit * (page - 1),
+      take: limit,
     });
 
-    return orders;
+    return { orders: orders[0], count: orders[1] };
   }
 
   async deleteOrder(orderId: number): Promise<void> {

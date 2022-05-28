@@ -12,14 +12,35 @@ export class ProductService {
     private productRepository: Repository<ProductEntity>,
   ) {}
 
-  async getProductsList(): Promise<ProductEntity[]> {
-    return await this.productRepository
-      .createQueryBuilder('P')
-      .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
-      .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
-      .select(['P', 'C.name AS categoryName', 'S.name AS subCategoryName'])
-      .orderBy('P.createdAt', 'DESC')
-      .getRawMany();
+  async getProductsList(
+    page?: number,
+    limit?: number,
+  ): Promise<ProductEntity[] | { products: ProductEntity[]; count: number }> {
+    if (!page && !limit) {
+      return await this.productRepository
+        .createQueryBuilder('P')
+        .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
+        .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
+        .select(['P', 'C.name AS categoryName', 'S.name AS subCategoryName'])
+        .orderBy('P.createdAt', 'DESC')
+        .getRawMany();
+    }
+
+    const [products, count] = await Promise.all([
+      this.productRepository
+        .createQueryBuilder('P')
+        .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
+        .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
+        .select(['P', 'C.name AS categoryName', 'S.name AS subCategoryName'])
+        .orderBy('P.createdAt', 'DESC')
+        .offset(limit * (page - 1))
+        .limit(limit)
+        .getRawMany(),
+
+      this.productRepository.count(),
+    ]);
+
+    return { products: products, count: count };
   }
 
   async getProductById(productId: number): Promise<ProductEntity> {

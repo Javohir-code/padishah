@@ -4,8 +4,10 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Query,
   UseGuards,
 } from '@nestjs/common';
+import { PaginationParams } from 'src/global/dto/pagination.dto';
 import { OrderEntity } from 'src/order/entities/order.entity';
 import { AdminJwtAuthGuard } from '../guards/admin-jwt-auth.guard';
 import { ManageOrdersService } from '../services/manage-orders.service';
@@ -24,8 +26,10 @@ export class ManageOrdersController {
 
   @Get('admin/orders-list')
   @UseGuards(AdminJwtAuthGuard)
-  async getOrderList(): Promise<OrderEntity[]> {
-    return await this.manageOrdersService.getOrderList();
+  async getOrderList(
+    @Query() { page, limit }: PaginationParams,
+  ): Promise<OrderEntity[] | { orders: OrderEntity[]; count: number }> {
+    return await this.manageOrdersService.getOrderList(page, limit);
   }
 
   @Delete('admin/order/:orderId')

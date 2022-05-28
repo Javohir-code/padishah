@@ -48,7 +48,6 @@ export class UserService {
 
   async loginUser(msisdn: string) {
     const code = this.generate4RandomDigit();
-    console.log(code);
     const res = await fetch(this.configService.get('sms_service.url'), {
       method: 'POST',
       headers: {

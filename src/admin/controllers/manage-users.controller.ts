@@ -4,8 +4,10 @@ import {
   Get,
   Param,
   ParseIntPipe,
+  Query,
   UseGuards,
 } from '@nestjs/common';
+import { PaginationParams } from 'src/global/dto/pagination.dto';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { AdminJwtAuthGuard } from '../guards/admin-jwt-auth.guard';
 import { ManageUsersService } from '../services/manage-users.service';
@@ -16,8 +18,10 @@ export class ManageUsersController {
 
   @Get('admin/users-list')
   @UseGuards(AdminJwtAuthGuard)
-  async getUsers(): Promise<UserEntity[]> {
-    return await this.manageUsersService.getUsers();
+  async getUsers(
+    @Query() { page, limit }: PaginationParams,
+  ): Promise<UserEntity[] | { users: UserEntity[]; count: number }> {
+    return await this.manageUsersService.getUsers(page, limit);
   }
 
   @Delete('admin/user/:userId')

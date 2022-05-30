@@ -25,6 +25,9 @@ import configuration from '../global/config/config';
 import { OrderModule } from 'src/order/order.module';
 import { ManageOrdersController } from './controllers/manage-orders.controller';
 import { ManageOrdersService } from './services/manage-orders.service';
+import { BrandModule } from 'src/brand/brand.module';
+import { ManageBrandsController } from './controllers/manage-brands.controller';
+import { ManageBrandsService } from './services/manage-brands.service';
 
 @Module({
   imports: [
@@ -46,6 +49,7 @@ import { ManageOrdersService } from './services/manage-orders.service';
     StoreModule,
     ProductModule,
     OrderModule,
+    BrandModule,
   ],
   controllers: [
     AdminController,
@@ -55,6 +59,7 @@ import { ManageOrdersService } from './services/manage-orders.service';
     ManageSubCategoriesController,
     ManageStoresController,
     ManageOrdersController,
+    ManageBrandsController,
   ],
   providers: [
     AdminJwtStrategy,
@@ -65,6 +70,7 @@ import { ManageOrdersService } from './services/manage-orders.service';
     ManageSubCategoriesService,
     ManageStoresService,
     ManageOrdersService,
+    ManageBrandsService,
   ],
   exports: [
     ManageUsersService,
@@ -73,6 +79,7 @@ import { ManageOrdersService } from './services/manage-orders.service';
     ManageSubCategoriesService,
     ManageStoresService,
     ManageOrdersService,
+    ManageBrandsService,
     AdminService,
     TypeOrmModule.forFeature([AdminEntity]),
   ],

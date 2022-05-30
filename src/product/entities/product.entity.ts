@@ -18,6 +18,12 @@ export class ProductEntity {
   storeId: number;
 
   @Column()
+  brandId: number;
+
+  @Column()
+  brandName: string;
+
+  @Column()
   storeName: string;
 
   @Column()
@@ -37,6 +43,9 @@ export class ProductEntity {
 
   @Column()
   productName: string;
+
+  @Column()
+  productType: string;
 
   @Column()
   gender: Gender;

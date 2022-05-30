@@ -21,6 +21,14 @@ export class ProductDetailsDto {
   @IsNotEmpty()
   storeId: number;
 
+  @IsNumber()
+  @IsNotEmpty()
+  brandId: number;
+
+  @IsString()
+  @IsNotEmpty()
+  brandName: string;
+
   @IsString()
   @IsNotEmpty()
   storeName: string;
@@ -40,6 +48,10 @@ export class ProductDetailsDto {
   @IsString()
   @IsNotEmpty()
   productName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  productType: string;
 
   @IsString()
   @IsIn([Gender.male, Gender.female])

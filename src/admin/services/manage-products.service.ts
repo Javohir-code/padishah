@@ -41,6 +41,8 @@ export class ManageProductsService {
     newProduct.categoryId = productDetailsDto.categoryId;
     newProduct.subCategoryId = productDetailsDto.subCategoryId;
     newProduct.storeId = productDetailsDto.storeId;
+    newProduct.brandId = productDetailsDto.brandId;
+    newProduct.brandName = productDetailsDto.brandName;
     newProduct.storeName = productDetailsDto.storeName;
     newProduct.description = productDetailsDto.description;
     newProduct.photos = JSON.stringify(images);
@@ -48,6 +50,7 @@ export class ManageProductsService {
     newProduct.colors = JSON.stringify(productDetailsDto.colors);
     newProduct.vendorCode = productDetailsDto.vendorCode;
     newProduct.productName = productDetailsDto.productName;
+    newProduct.productType = productDetailsDto.productType;
     newProduct.gender = productDetailsDto.gender;
     newProduct.msisdn = productDetailsDto.msisdn;
     newProduct.telegram = productDetailsDto.telegram;

@@ -92,6 +92,8 @@ CREATE TABLE `ProductMast` (
     `categoryId` int NULL,
     `subCategoryId` int NULL,
     `storeId` int NULL,
+    `brandId` int NULL,
+    `brandName` varchar(50) NULL,
     `storeName` varchar(50) NULL,
     `description` varchar(255),
     `photos` longtext NULL,
@@ -99,6 +101,7 @@ CREATE TABLE `ProductMast` (
     `colors` longtext NULL,
     `vendorCode` int NULL,
     `productName` varchar(50) NULL,
+    `productType` varchar(50) NULL,
     `gender` varchar(50) NULL,
     `msisdn` varchar(50) NULL,
     `telegram` varchar(50) NULL,
@@ -108,7 +111,7 @@ CREATE TABLE `ProductMast` (
     `price` int NULL,
     `salePrice` int NULL,
     `size` longtext NULL,
-    `material` varchar(255) NULL,
+    `material` varchar(500) NULL,
     `manufacturerCountry` varchar(50) NULL,
     `metadata` longtext NULL,
     `createdAt` datetime NULL,
@@ -130,5 +133,16 @@ CREATE TABLE `OrderMast` (
     CONSTRAINT `PK_OrderMast` PRIMARY KEY 
     (
         `orderId` ASC
+    )
+);
+
+/****** Table: BrandMast ******/
+CREATE TABLE `BrandMast` (
+    `brandId` int AUTO_INCREMENT NOT NULL,
+    `name` varchar(50) NULL,
+    `createdAt` datetime NULL,
+    CONSTRAINT `PK_BrandMast` PRIMARY KEY
+    (
+        `brandId` ASC
     )
 );

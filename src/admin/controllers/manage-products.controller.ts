@@ -21,13 +21,13 @@ export class ManageProductsController {
 
   @Post('admin/add-product')
   @UseGuards(AdminJwtAuthGuard)
-  @UseInterceptors(FilesInterceptor('files'))
+  @UseInterceptors(FilesInterceptor('photos'))
   async addProduct(
-    @UploadedFiles() files: Array<Express.Multer.File>,
+    @UploadedFiles() photos: Array<Express.Multer.File>,
     @Body() productDetailsDto: ProductDetailsDto,
   ): Promise<ProductEntity> {
     return await this.manageProductsService.addProduct(
-      files,
+      photos,
       productDetailsDto,
     );
   }

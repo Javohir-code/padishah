@@ -24,14 +24,14 @@ export class ManageCategoriesService {
   ) {}
 
   async addCategory(
-    file: PhotosDto,
+    icon: PhotosDto,
     categoryDto: CategoryDto,
   ): Promise<CategoryEntity> {
     const uploadedResult = await this.s3Service
       .upload({
         Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
-        Body: file.buffer,
-        Key: `${Math.floor(Math.random() * 10000)}-${file.originalname}`,
+        Body: icon.buffer,
+        Key: `${Math.floor(Math.random() * 10000)}-${icon.originalname}`,
       })
       .promise();
     const newCategory = await this.categoryRepository.create();

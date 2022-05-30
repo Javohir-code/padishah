@@ -21,12 +21,12 @@ export class ManageCategoriesController {
 
   @Post('admin/add-category')
   @UseGuards(AdminJwtAuthGuard)
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('icon'))
   async addCategory(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile() icon: Express.Multer.File,
     @Body() categoryDto: CategoryDto,
   ): Promise<CategoryEntity> {
-    return await this.manageCategoryService.addCategory(file, categoryDto);
+    return await this.manageCategoryService.addCategory(icon, categoryDto);
   }
 
   @Delete('admin/category/:categoryId')

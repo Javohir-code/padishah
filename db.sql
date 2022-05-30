@@ -127,6 +127,7 @@ CREATE TABLE `OrderMast` (
     `userId` int NULL,
     `orders` longtext NULL,
     `totalPrice` int NULL,
+    `location` varchar(500) NULL,
     `paymentStatus` varchar(50) NULL,
     `productStatus` varchar(50) NULL,
     `createdAt` datetime NULL,

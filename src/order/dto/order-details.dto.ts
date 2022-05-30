@@ -1,4 +1,11 @@
-import { IsArray, IsIn, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsIn,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+} from 'class-validator';
 import { PaymentStatus } from '../../product/enums/payment-status.enum';
 import { ProductStatus } from '../../product/enums/product-status.enum';
 import { IOrder } from '../interfaces/order.interface';
@@ -11,6 +18,10 @@ export class OrderDetailsDto {
   @IsNumber()
   @IsNotEmpty()
   totalPrice: number;
+
+  @IsString()
+  @IsOptional()
+  location: string;
 
   @IsString()
   @IsIn([PaymentStatus.unpaid, PaymentStatus.pending, PaymentStatus.paid])

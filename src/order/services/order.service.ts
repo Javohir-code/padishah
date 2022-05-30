@@ -24,6 +24,7 @@ export class OrderService {
     newOrder.userId = foundUser.userId;
     newOrder.orders = JSON.stringify(orderDetailsDto.orders);
     newOrder.totalPrice = orderDetailsDto.totalPrice;
+    newOrder.location = orderDetailsDto.location;
     newOrder.paymentStatus = orderDetailsDto.paymentStatus;
     newOrder.productStatus = ProductStatus.in_progress;
 

@@ -19,6 +19,9 @@ export class OrderEntity {
   totalPrice: number;
 
   @Column()
+  location: string;
+
+  @Column()
   paymentStatus: PaymentStatus;
 
   @Column()

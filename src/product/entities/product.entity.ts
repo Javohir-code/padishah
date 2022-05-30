@@ -21,12 +21,6 @@ export class ProductEntity {
   brandId: number;
 
   @Column()
-  brandName: string;
-
-  @Column()
-  storeName: string;
-
-  @Column()
   description: string;
 
   @Column()

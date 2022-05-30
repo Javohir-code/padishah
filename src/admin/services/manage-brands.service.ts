@@ -23,4 +23,9 @@ export class ManageBrandsService {
     const brand = await this.brandService.getBrandById(brandId);
     await this.brandRepository.delete(brand.brandId);
   }
+
+  async updateBrandName(brandId: number, name: string): Promise<BrandEntity> {
+    const brand = await this.brandService.getBrandById(brandId);
+    return await this.brandRepository.save({ ...brand, name });
+  }
 }

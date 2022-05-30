@@ -42,8 +42,6 @@ export class ManageProductsService {
     newProduct.subCategoryId = productDetailsDto.subCategoryId;
     newProduct.storeId = productDetailsDto.storeId;
     newProduct.brandId = productDetailsDto.brandId;
-    newProduct.brandName = productDetailsDto.brandName;
-    newProduct.storeName = productDetailsDto.storeName;
     newProduct.description = productDetailsDto.description;
     newProduct.photos = JSON.stringify(images);
     newProduct.keys = JSON.stringify(keys);

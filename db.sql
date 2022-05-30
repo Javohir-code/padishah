@@ -93,8 +93,6 @@ CREATE TABLE `ProductMast` (
     `subCategoryId` int NULL,
     `storeId` int NULL,
     `brandId` int NULL,
-    `brandName` varchar(50) NULL,
-    `storeName` varchar(50) NULL,
     `description` varchar(255),
     `photos` longtext NULL,
     `keys` longtext NULL,

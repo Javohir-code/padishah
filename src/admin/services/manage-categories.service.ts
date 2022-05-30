@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { S3 } from 'aws-sdk';
 import { InjectAwsService } from 'nest-aws-sdk';
 import { CategoryDto } from 'src/category/dto/category.dto';
+import { UpdateCategoryDto } from 'src/category/dto/update-category.dto';
 import { CategoryEntity } from 'src/category/entities/category.entity';
 import { CategoryService } from 'src/category/services/category.service';
 import { PhotosDto } from 'src/product/dto/photo.dto';
@@ -57,4 +58,22 @@ export class ManageCategoriesService {
       categoryId: In([category.categoryId]),
     });
   }
+
+  // async updateCategory(
+  //   icon?: PhotosDto,
+  //   updateCategoryDto: UpdateCategoryDto,
+  // ): Promise<CategoryEntity> {
+  //   const category = await this.categoryService.getCategoryById(
+  //     updateCategoryDto.categoryId,
+  //   );
+  //   if (icon) {
+  //     const uploadedResult = await this.s3Service
+  //       .upload({
+  //         Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
+  //         Body: icon.buffer,
+  //         Key: `${Math.floor(Math.random() * 10000)}-${icon.originalname}`,
+  //       })
+  //       .promise();
+  //   }
+  // }
 }

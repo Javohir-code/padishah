@@ -27,14 +27,6 @@ export class ProductDetailsDto {
 
   @IsString()
   @IsNotEmpty()
-  brandName: string;
-
-  @IsString()
-  @IsNotEmpty()
-  storeName: string;
-
-  @IsString()
-  @IsNotEmpty()
   description: string;
 
   @IsArray()

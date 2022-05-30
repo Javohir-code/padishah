@@ -21,7 +21,7 @@ export class ProductService {
         .createQueryBuilder('P')
         .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
         .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
-        .select(['P', 'C.name AS categoryName', 'S.name AS subCategoryName'])
+        .select(['P.*', 'C.name AS categoryName', 'S.name AS subCategoryName'])
         .orderBy('P.createdAt', 'DESC')
         .getRawMany();
     }
@@ -31,7 +31,7 @@ export class ProductService {
         .createQueryBuilder('P')
         .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
         .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
-        .select(['P', 'C.name AS categoryName', 'S.name AS subCategoryName'])
+        .select(['P.*', 'C.name AS categoryName', 'S.name AS subCategoryName'])
         .orderBy('P.createdAt', 'DESC')
         .offset(limit * (page - 1))
         .limit(limit)

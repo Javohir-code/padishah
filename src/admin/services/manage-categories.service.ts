@@ -59,21 +59,32 @@ export class ManageCategoriesService {
     });
   }
 
-  // async updateCategory(
-  //   icon?: PhotosDto,
-  //   updateCategoryDto: UpdateCategoryDto,
-  // ): Promise<CategoryEntity> {
-  //   const category = await this.categoryService.getCategoryById(
-  //     updateCategoryDto.categoryId,
-  //   );
-  //   if (icon) {
-  //     const uploadedResult = await this.s3Service
-  //       .upload({
-  //         Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
-  //         Body: icon.buffer,
-  //         Key: `${Math.floor(Math.random() * 10000)}-${icon.originalname}`,
-  //       })
-  //       .promise();
-  //   }
-  // }
+  async updateCategory(
+    icon?: PhotosDto,
+    categoryId?: number,
+    name?: string,
+  ): Promise<CategoryEntity> {
+    const category = await this.categoryService.getCategoryById(categoryId);
+    if (icon) {
+      await this.s3Service
+        .deleteObject({
+          Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
+          Key: category.key.substring(6),
+        })
+        .promise();
+
+      const uploadedResult = await this.s3Service
+        .upload({
+          Bucket: `${this.configService.get('awsS3Bucket')}/icons`,
+          Body: icon.buffer,
+          Key: `${Math.floor(Math.random() * 10000)}-${icon.originalname}`,
+        })
+        .promise();
+      category.name = name ? name : category.name;
+      category.icon = uploadedResult.Location;
+      category.key = uploadedResult.Key;
+      return await this.categoryRepository.save({ ...category });
+    }
+    return await this.categoryRepository.save({ ...category, name });
+  }
 }

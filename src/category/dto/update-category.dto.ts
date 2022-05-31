@@ -6,6 +6,5 @@ export class UpdateCategoryDto {
   categoryId: number;
 
   @IsString()
-  @IsNotEmpty()
   name: string;
 }

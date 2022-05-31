@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CategoryDto } from 'src/category/dto/category.dto';
+import { UpdateCategoryDto } from 'src/category/dto/update-category.dto';
 import { CategoryEntity } from 'src/category/entities/category.entity';
 import { AdminJwtAuthGuard } from '../guards/admin-jwt-auth.guard';
 import { ManageCategoriesService } from '../services/manage-categories.service';
@@ -35,5 +36,19 @@ export class ManageCategoriesController {
     @Param('categoryId', ParseIntPipe) categoryId: number,
   ): Promise<void> {
     await this.manageCategoryService.removeCategory(categoryId);
+  }
+
+  @Post('admin/category/edit')
+  @UseGuards(AdminJwtAuthGuard)
+  @UseInterceptors(FileInterceptor('icon'))
+  async updateCategory(
+    @UploadedFile() icon: Express.Multer.File,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ): Promise<CategoryEntity> {
+    return await this.manageCategoryService.updateCategory(
+      icon,
+      updateCategoryDto.categoryId,
+      updateCategoryDto.name,
+    );
   }
 }

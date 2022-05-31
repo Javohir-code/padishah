@@ -7,6 +7,8 @@ import { AdminLoginDto } from '../dto/admin.login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { compareSync } from 'bcryptjs';
 import { ILogin } from '../interfaces/login.interface';
+import { IAdmin } from '../interfaces/update-admin.interface';
+import { hash } from 'bcryptjs';
 
 @Injectable()
 export class AdminService {
@@ -46,5 +48,26 @@ export class AdminService {
 
   private async findByEmail(email: string): Promise<AdminEntity> {
     return await this.adminRepository.findOne({ where: { email: email } });
+  }
+
+  private async findAdminById(id: number): Promise<AdminEntity> {
+    return await this.adminRepository.findOneBy({ id });
+  }
+
+  async updateAdminCredentials(
+    id?: number,
+    firstName?: string,
+    lastName?: string,
+    email?: string,
+    password?: string,
+  ): Promise<IAdmin> {
+    const admin = await this.findAdminById(id);
+    admin.firstName = firstName ? firstName : admin.firstName;
+    admin.lastName = lastName ? lastName : admin.lastName;
+    admin.email = email ? email : admin.email;
+    admin.password = password ? await hash(password, 10) : admin.password;
+    const updated = await this.adminRepository.save({ ...admin });
+    delete updated.password;
+    return updated;
   }
 }

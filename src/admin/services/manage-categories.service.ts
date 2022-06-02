@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { S3 } from 'aws-sdk';
 import { InjectAwsService } from 'nest-aws-sdk';
 import { CategoryDto } from 'src/category/dto/category.dto';
-import { UpdateCategoryDto } from 'src/category/dto/update-category.dto';
 import { CategoryEntity } from 'src/category/entities/category.entity';
 import { CategoryService } from 'src/category/services/category.service';
 import { PhotosDto } from 'src/product/dto/photo.dto';

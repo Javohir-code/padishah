@@ -6,8 +6,9 @@ import { InjectAwsService } from 'nest-aws-sdk';
 import { PhotosDto } from 'src/product/dto/photo.dto';
 import { ProductDetailsDto } from 'src/product/dto/product-details.dto';
 import { ProductEntity } from 'src/product/entities/product.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ProductService } from 'src/product/services/product.service';
+import { UpdateProductDto } from 'src/product/dto/update-product.dto';
 
 @Injectable()
 export class ManageProductsService {
@@ -69,4 +70,18 @@ export class ManageProductsService {
     const product = await this.productService.getProductById(productId);
     await this.productRepository.delete(product.productId);
   }
+
+  async deleteProductPhoto(productUrl: string) {
+    await this.s3Service
+      .deleteObject({
+        Bucket: `${this.configService.get('awsS3Bucket')}/products`,
+        Key: productUrl.substring(43),
+      })
+      .promise();
+  }
+
+  // async updateProduct(
+  //   photos: Array<PhotosDto>,
+  //   updateProduct: UpdateProductDto,
+  // ) {}
 }

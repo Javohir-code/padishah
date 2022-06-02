@@ -39,4 +39,9 @@ export class ManageProductsController {
   ): Promise<void> {
     await this.manageProductsService.deleteProduct(productId);
   }
+
+  @Delete('admin/delete/product/photo')
+  async deleteProductPhoto(@Body('url') productUrl: string): Promise<void> {
+    await this.manageProductsService.deleteProductPhoto(productUrl);
+  }
 }

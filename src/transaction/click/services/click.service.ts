@@ -123,8 +123,7 @@ export class ClickService {
     console.log('...preparePay');
     const verificationError = this.verifyRequest(req.body);
     if (verificationError) {
-      res.json(verificationError);
-      return 0;
+      return verificationError;
     }
     const headPayload = {
       service_id: req.body.service_id,
@@ -134,15 +133,14 @@ export class ClickService {
       merchant_confirm_id: req.body.merchant_confirm_id,
     };
 
-    res.json(headPayload);
+    return headPayload;
   }
 
   async completePay(req, res) {
     console.log('...completePay');
     const verificationError = this.verifyRequestComplete(req.body);
     if (verificationError) {
-      res.json(verificationError);
-      return 0;
+      return verificationError;
     }
 
     const headPayload = {
@@ -160,6 +158,6 @@ export class ClickService {
     newTransaction.click_paydoc_id = req.body.click_paydoc_id;
     newTransaction.amount = req.body.amount;
 
-    res.json(newTransaction);
+    return newTransaction;
   }
 }

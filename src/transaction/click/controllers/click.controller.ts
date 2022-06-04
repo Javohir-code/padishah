@@ -1,18 +1,18 @@
-import { Controller, Post, Req, Res } from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ClickService } from '../services/click.service';
-import { Request, Response } from 'express';
+import { ClickPayload } from '../interfaces/click-payload.interface';
 
 @Controller()
 export class ClickController {
   constructor(private clickService: ClickService) {}
 
   @Post('customer/click/prepare')
-  async preparePay(@Req() req: Request, @Res() res: Response) {
-    return this.clickService.preparePay(req, res);
+  async preparePay(@Body() clickPayload: ClickPayload) {
+    return this.clickService.preparePay(clickPayload);
   }
 
   @Post('customer/click/complete')
-  async completePay(@Req() req: Request, @Res() res: Response) {
-    return await this.clickService.completePay(req, res);
+  async completePay(@Body() clickPayload: ClickPayload) {
+    return await this.clickService.completePay(clickPayload);
   }
 }

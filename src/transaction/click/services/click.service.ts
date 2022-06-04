@@ -119,44 +119,44 @@ export class ClickService {
     return error;
   }
 
-  async preparePay(req, res) {
+  async preparePay(clickPayload: ClickPayload) {
     console.log('...preparePay');
-    const verificationError = this.verifyRequest(req.body);
+    const verificationError = this.verifyRequest(clickPayload);
     if (verificationError) {
       return verificationError;
     }
     const headPayload = {
-      service_id: req.body.service_id,
-      click_trans_id: req.body.click_trans_id,
-      merchant_trans_id: req.body.merchant_trans_id,
-      merchant_prepare_id: req.body.merchant_prepare_id,
-      merchant_confirm_id: req.body.merchant_confirm_id,
+      service_id: clickPayload.service_id,
+      click_trans_id: clickPayload.click_trans_id,
+      merchant_trans_id: clickPayload.merchant_trans_id,
+      merchant_prepare_id: clickPayload.merchant_prepare_id,
+      error: clickPayload.error,
     };
 
     return headPayload;
   }
 
-  async completePay(req, res) {
+  async completePay(clickPayload: ClickPayload) {
     console.log('...completePay');
-    const verificationError = this.verifyRequestComplete(req.body);
+    const verificationError = this.verifyRequestComplete(clickPayload);
     if (verificationError) {
       return verificationError;
     }
 
     const headPayload = {
-      service_id: req.body.service_id,
-      click_trans_id: req.body.click_trans_id,
-      merchant_confirm_id: req.body.merchant_confirm_id,
-      merchant_trans_id: req.body.merchant_trans_id,
+      service_id: clickPayload.service_id,
+      click_trans_id: clickPayload.click_trans_id,
+      merchant_confirm_id: clickPayload.merchant_confirm_id,
+      merchant_trans_id: clickPayload.merchant_trans_id,
     };
 
     const newTransaction = await this.transactionRepository.create();
     newTransaction.click_trans_id = headPayload.click_trans_id;
     newTransaction.merchant_trans_id = headPayload.merchant_trans_id;
-    newTransaction.sign_time = req.body.sign_time;
-    newTransaction.sign_string = req.body.sign_string;
-    newTransaction.click_paydoc_id = req.body.click_paydoc_id;
-    newTransaction.amount = req.body.amount;
+    newTransaction.sign_time = clickPayload.sign_time;
+    newTransaction.sign_string = clickPayload.sign_string;
+    newTransaction.click_paydoc_id = clickPayload.click_paydoc_id;
+    newTransaction.amount = clickPayload.amount;
 
     return newTransaction;
   }

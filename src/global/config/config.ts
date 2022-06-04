@@ -21,6 +21,17 @@ export default () => ({
     orginator: process.env.SMS_ORGINATOR,
     auth: process.env.SMS_AUTH,
   },
+  click_service: {
+    service_id: process.env.SERVICE_ID,
+    merchant_id: process.env.MERCHANT_ID,
+    secret_key: process.env.SECRET_KEY,
+    merchant_user_id: process.env.MERCHANT_USER_ID,
+  },
+  payme_service: {
+    merchant_id: process.env.MERCHANT_ID,
+    key: process.env.KEY,
+    test_key: process.env.TEST_KEY,
+  },
   awsSecret: process.env.AWS_SECRET,
   awsAccess: process.env.AWS_ACCESS,
   awsS3Bucket: process.env.AWS_S3_BUCKET,

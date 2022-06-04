@@ -19,6 +19,8 @@ import { OrderModule } from './order/order.module';
 import { OrderEntity } from './order/entities/order.entity';
 import { BrandModule } from './brand/brand.module';
 import { BrandEntity } from './brand/entities/brand.entity';
+import { TransactionModule } from './transaction/transaction.module';
+import { TransactionEntity } from './transaction/entities/transaction.entity';
 
 const entities = [
   UserEntity,
@@ -30,6 +32,7 @@ const entities = [
   ProductEntity,
   OrderEntity,
   BrandEntity,
+  TransactionEntity,
 ];
 
 @Module({
@@ -57,6 +60,7 @@ const entities = [
     SubCategoryModule,
     OrderModule,
     BrandModule,
+    TransactionModule,
   ],
   controllers: [],
   providers: [],

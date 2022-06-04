@@ -27,6 +27,21 @@ export class OrderEntity {
   @Column()
   productStatus: ProductStatus;
 
+  @Column({ default: 0 })
+  refunded: number;
+
+  @Column({ default: 'UZS' })
+  currency: string;
+
+  @Column({ default: 0 })
+  paid: number;
+
+  @Column({ default: 0 })
+  cancelled: number;
+
+  @Column()
+  click_trans_id: number;
+
   @Column()
   createdAt: string;
 

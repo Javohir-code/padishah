@@ -128,6 +128,11 @@ CREATE TABLE `OrderMast` (
     `location` varchar(500) NULL,
     `paymentStatus` varchar(50) NULL,
     `productStatus` varchar(50) NULL,
+    `refunded` bit NULL,
+    `currency` varchar(50) NULL,
+    `paid` bit NULL,
+    `cancelled` bit NULL,
+    `click_trans_id` int NULL,
     `createdAt` datetime NULL,
     CONSTRAINT `PK_OrderMast` PRIMARY KEY 
     (
@@ -143,5 +148,30 @@ CREATE TABLE `BrandMast` (
     CONSTRAINT `PK_BrandMast` PRIMARY KEY
     (
         `brandId` ASC
+    )
+);
+
+/****** Table: TransactionMast *****/
+CREATE TABLE `TransactionMast` (
+    `transactionId` int AUTO_INCREMENT NOT NULL,
+    `orderId` int NULL,
+    `userId` int NULL,
+    `click_trans_id` int NULL,
+    `merchant_trans_id` varchar(255) NULL,
+    `sign_time` varchar(255) NULL,
+    `sign_string` varchar(255) NULL,
+    `click_paydoc_id` int NULL,
+    `amount` int NULL,
+    `perform_time` int NULL,
+    `cancel_time` int NULL,
+    `reason` varchar(500) NULL,
+    `state` int NULL,
+    `refID` varchar(255) NULL,
+    `active` bit NULL,
+    `createdAt` datetime NULL,
+    `updatedAt` datetime NULL,
+    CONSTRAINT `PK_TransactionMast` PRIMARY KEY
+    (
+        `transactionId` ASC
     )
 );

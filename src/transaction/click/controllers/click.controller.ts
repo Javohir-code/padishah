@@ -7,12 +7,12 @@ export class ClickController {
   constructor(private clickService: ClickService) {}
 
   @Post('customer/click/prepare')
-  async preparePay(@Body() clickPayload: ClickPayload) {
+  async preparePay(@Body() clickPayload: ClickPayload): Promise<ClickPayload> {
     return this.clickService.preparePay(clickPayload);
   }
 
   @Post('customer/click/complete')
   async completePay(@Body() clickPayload: ClickPayload) {
-    return await this.clickService.completePay(clickPayload);
+    return this.clickService.completePay(clickPayload);
   }
 }

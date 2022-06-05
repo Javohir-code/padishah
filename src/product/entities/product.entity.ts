@@ -66,6 +66,9 @@ export class ProductEntity {
   salePrice: number;
 
   @Column()
+  salePercent: number;
+
+  @Column()
   size: string;
 
   @Column()

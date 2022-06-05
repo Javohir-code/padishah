@@ -40,8 +40,11 @@ export class ManageProductsController {
     await this.manageProductsService.deleteProduct(productId);
   }
 
-  @Delete('admin/delete/product/photo')
-  async deleteProductPhoto(@Body('url') productUrl: string): Promise<void> {
-    await this.manageProductsService.deleteProductPhoto(productUrl);
+  @Delete('admin/delete/product/photo/:productId')
+  async deleteProductPhoto(
+    @Param('productId', ParseIntPipe) productId: number,
+    @Body('url') productUrl: string,
+  ): Promise<void> {
+    await this.manageProductsService.deleteProductPhoto(productId, productUrl);
   }
 }

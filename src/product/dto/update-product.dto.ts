@@ -8,6 +8,11 @@ import {
 } from 'class-validator';
 import { Gender } from '../enums/gender.enum';
 
+type metaValues = {
+  key: string | number;
+  value: any;
+};
+
 export class UpdateProductDto {
   @IsNumber()
   @IsNotEmpty()
@@ -81,6 +86,9 @@ export class UpdateProductDto {
   @IsOptional()
   salePrice: number;
 
+  @IsOptional()
+  salePercent: number;
+
   @IsArray()
   @IsOptional()
   size: Array<number>;
@@ -94,5 +102,5 @@ export class UpdateProductDto {
   manufacturerCountry: string;
 
   @IsOptional()
-  metadata: string;
+  metadata: Array<metaValues>;
 }

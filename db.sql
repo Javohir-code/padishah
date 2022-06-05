@@ -108,6 +108,7 @@ CREATE TABLE `ProductMast` (
     `remainProducts` int NULL,
     `price` int NULL,
     `salePrice` int NULL,
+    `salePercent` int NULL,
     `size` longtext NULL,
     `material` varchar(500) NULL,
     `manufacturerCountry` varchar(50) NULL,

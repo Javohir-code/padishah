@@ -6,7 +6,7 @@ import { InjectAwsService } from 'nest-aws-sdk';
 import { PhotosDto } from 'src/product/dto/photo.dto';
 import { ProductDetailsDto } from 'src/product/dto/product-details.dto';
 import { ProductEntity } from 'src/product/entities/product.entity';
-import { In, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { ProductService } from 'src/product/services/product.service';
 import { UpdateProductDto } from 'src/product/dto/update-product.dto';
 
@@ -105,13 +105,13 @@ export class ManageProductsService {
   async updateProduct(
     photos?: Array<PhotosDto>,
     updateProduct?: UpdateProductDto,
-  ) {
+  ): Promise<ProductEntity> {
     const images = [];
     const keys = [];
     const product = await this.productService.getProductById(
       updateProduct.productId,
     );
-    if (photos) {
+    if (photos.length > 0) {
       for (let i = 0; i < photos.length; i++) {
         const uploadedResult = await this.s3Service
           .upload({
@@ -141,6 +141,8 @@ export class ManageProductsService {
     product.description = updateProduct.description
       ? updateProduct.description
       : product.description;
+    product.photos = JSON.stringify(JSON.parse(product.photos).concat(images));
+    product.keys = JSON.stringify(JSON.parse(product.keys).concat(keys));
     product.colors = JSON.stringify(updateProduct.colors)
       ? JSON.stringify(updateProduct.colors)
       : product.colors;
@@ -190,5 +192,14 @@ export class ManageProductsService {
     product.metadata = JSON.stringify(updateProduct.metadata)
       ? JSON.stringify(updateProduct.metadata)
       : product.metadata;
+
+    await this.productRepository.save({
+      ...product,
+      updateProduct,
+      photos: product.photos,
+      keys: product.keys,
+    });
+
+    return product;
   }
 }

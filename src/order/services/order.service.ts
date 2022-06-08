@@ -17,12 +17,12 @@ export class OrderService {
     private userService: UserService,
     private productService: ProductService,
     @InjectRepository(ProductEntity)
-    private productRepository: Repository<ProductEntity>,
+    private productRepository: Repository<ProductEntity>
   ) {}
 
   async addOrder(
     user: IRequestUser,
-    orderDetailsDto: OrderDetailsDto,
+    orderDetailsDto: OrderDetailsDto
   ): Promise<IRequestUser | OrderEntity> {
     const foundUser = await this.userService.findUserByMsisdn(user.msisdn);
     const newOrder = await this.orderRepository.create();
@@ -35,17 +35,32 @@ export class OrderService {
 
     for (let i = 0; i < orderDetailsDto.orders.length; i++) {
       const product = await this.productService.getProductById(
-        orderDetailsDto.orders[i].productId,
+        orderDetailsDto.orders[i].productId
       );
       product.remainProducts -= orderDetailsDto.orders[i].quantity;
       await this.productRepository.save({
         ...product,
-        remainProducts: product.remainProducts,
+        remainProducts: product.remainProducts
       });
     }
 
     await this.orderRepository.save(newOrder);
 
     return newOrder;
+  }
+
+  async getOrderPrepare(merchant_trans_id) {
+    return await this.orderRepository.findOne({
+      where: { orderId: merchant_trans_id }
+    });
+  }
+
+  async getOrderComplete(click_trans_id, merchant_trans_id) {
+    return await this.orderRepository.findOne({
+      where: {
+        orderId: merchant_trans_id,
+        click_trans_id: click_trans_id
+      }
+    });
   }
 }

@@ -230,7 +230,7 @@ export class PaymeService {
     }
 
     function checkAuth(auth: any) {
-      console.log(auth)
+      console.log(auth);
       return (
         auth && //проверяем существование заголовка
         (auth = auth.trim().split(/ +/)) && //разделяем заголовок на 2 части
@@ -239,7 +239,7 @@ export class PaymeService {
         (auth = Buffer.from(auth[1], 'base64').toString('utf-8')) && //декодируем из base64
         (auth = auth.trim().split(/ *: */)) && //разделяем заголовок на логин пароль
         auth[0] === 'Paycom' && //проверяем логин
-        auth[1] === this.configService.get('payme_service.merchant_id')
+        auth[1] === base.configService.get('payme_service.merchant_id')
       );
     }
 

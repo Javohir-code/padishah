@@ -72,6 +72,9 @@ export class ProductEntity {
   size: string;
 
   @Column()
+  tags: string;
+
+  @Column()
   material: string;
 
   @Column()

@@ -9,30 +9,30 @@ export default () => ({
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
-    sync: Boolean(process.env.DB_TYPEORM_SYNC),
+    sync: Boolean(process.env.DB_TYPEORM_SYNC)
   },
   admin: {
-    jwtSecret: process.env.ADMIN_JWT_SECRET,
+    jwtSecret: process.env.ADMIN_JWT_SECRET
   },
   sms_service: {
     url: process.env.SMS_API,
     username: process.env.SMS_USERNAME,
     password: process.env.SMS_PASSWORD,
     orginator: process.env.SMS_ORGINATOR,
-    auth: process.env.SMS_AUTH,
+    auth: process.env.SMS_AUTH
   },
   click_service: {
     service_id: process.env.SERVICE_ID,
     merchant_id: process.env.MERCHANT_ID,
     secret_key: process.env.SECRET_KEY,
-    merchant_user_id: process.env.MERCHANT_USER_ID,
+    merchant_user_id: process.env.MERCHANT_USER_ID
   },
   payme_service: {
-    merchant_id: process.env.MERCHANT_ID,
-    key: process.env.KEY,
-    test_key: process.env.TEST_KEY,
+    merchant_id: process.env.PAYME_MERCHANT_ID,
+    key: process.env.PAYME_KEY,
+    test_key: process.env.PAYME_TEST_KEY
   },
   awsSecret: process.env.AWS_SECRET,
   awsAccess: process.env.AWS_ACCESS,
-  awsS3Bucket: process.env.AWS_S3_BUCKET,
+  awsS3Bucket: process.env.AWS_S3_BUCKET
 });

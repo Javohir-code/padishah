@@ -9,15 +9,22 @@ export class ProductController {
 
   @Get('products-list')
   async getProductsList(
-    @Query() { page, limit }: PaginationParams,
+    @Query() { page, limit }: PaginationParams
   ): Promise<ProductEntity[] | { products: ProductEntity[]; count: number }> {
     return await this.productService.getProductsList(page, limit);
   }
 
   @Get(':productId')
   async getProductById(
-    @Param('productId', ParseIntPipe) productId: number,
+    @Param('productId', ParseIntPipe) productId: number
   ): Promise<ProductEntity> {
     return await this.productService.getProductById(productId);
+  }
+
+  @Get('similiar/:subCategoryId')
+  async getSimiliarProducts(
+    @Param('subCategoryId', ParseIntPipe) subCategoryId: number
+  ): Promise<ProductEntity[]> {
+    return await this.productService.getSimiliarProducts(subCategoryId);
   }
 }

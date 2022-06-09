@@ -30,3 +30,5 @@ import { ProductEntity } from './entities/product.entity';
   exports: [TypeOrmModule.forFeature([ProductEntity]), ProductService],
 })
 export class ProductModule {}
+
+

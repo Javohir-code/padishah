@@ -18,12 +18,12 @@ export class ManageProductsService {
     @InjectAwsService(S3)
     private readonly s3Service: S3,
     private readonly configService: ConfigService,
-    private productService: ProductService,
+    private productService: ProductService
   ) {}
 
   async addProduct(
     photos: Array<PhotosDto>,
-    productDetailsDto: ProductDetailsDto,
+    productDetailsDto: ProductDetailsDto
   ): Promise<ProductEntity> {
     const images = [];
     const keys = [];
@@ -32,7 +32,7 @@ export class ManageProductsService {
         .upload({
           Bucket: `${this.configService.get('awsS3Bucket')}/products`,
           Body: photos[i].buffer,
-          Key: `${Math.floor(Math.random() * 10000)}-${photos[i].originalname}`,
+          Key: `${Math.floor(Math.random() * 10000)}-${photos[i].originalname}`
         })
         .promise();
       images.push(uploadedResult.Location);
@@ -60,6 +60,7 @@ export class ManageProductsService {
     newProduct.salePrice = productDetailsDto?.salePrice;
     newProduct.salePercent = productDetailsDto?.salePercent;
     newProduct.size = JSON.stringify(productDetailsDto.size);
+    newProduct.tags = JSON.stringify(productDetailsDto?.tags);
     newProduct.material = productDetailsDto.material;
     newProduct.manufacturerCountry = productDetailsDto.manufacturerCountry;
 
@@ -74,7 +75,7 @@ export class ManageProductsService {
 
   async deleteProductPhoto(
     productId: number,
-    productUrl: string,
+    productUrl: string
   ): Promise<void> {
     const newObjPhoto = {};
     const newObjKey = {};
@@ -82,34 +83,34 @@ export class ManageProductsService {
     product.photos = JSON.parse(product.photos);
     product.keys = JSON.parse(product.keys);
     const photos = Object.keys(product.photos).filter(
-      (photo) => product.photos[photo] !== productUrl,
+      (photo) => product.photos[photo] !== productUrl
     );
     const keys = Object.keys(product.keys).filter(
-      (key) => product.keys[key] !== productUrl.substring(34),
+      (key) => product.keys[key] !== productUrl.substring(34)
     );
     photos.forEach((photo) => (newObjPhoto[photo] = product.photos[photo]));
     keys.forEach((key) => (newObjKey[key] = product.keys[key]));
     await this.productRepository.save({
       ...product,
       photos: JSON.stringify(Object.values(newObjPhoto)),
-      keys: JSON.stringify(Object.values(newObjKey)),
+      keys: JSON.stringify(Object.values(newObjKey))
     });
     await this.s3Service
       .deleteObject({
         Bucket: `${this.configService.get('awsS3Bucket')}/products`,
-        Key: productUrl.substring(43),
+        Key: productUrl.substring(43)
       })
       .promise();
   }
 
   async updateProduct(
     photos?: Array<PhotosDto>,
-    updateProduct?: UpdateProductDto,
+    updateProduct?: UpdateProductDto
   ): Promise<ProductEntity> {
     const images = [];
     const keys = [];
     const product = await this.productService.getProductById(
-      updateProduct.productId,
+      updateProduct.productId
     );
     if (photos.length > 0) {
       for (let i = 0; i < photos.length; i++) {
@@ -119,7 +120,7 @@ export class ManageProductsService {
             Body: photos[i].buffer,
             Key: `${Math.floor(Math.random() * 10000)}-${
               photos[i].originalname
-            }`,
+            }`
           })
           .promise();
         images.push(uploadedResult.Location);
@@ -183,6 +184,9 @@ export class ManageProductsService {
     product.size = JSON.stringify(updateProduct.size)
       ? JSON.stringify(updateProduct.size)
       : product.size;
+    product.tags = JSON.stringify(updateProduct.tags)
+      ? JSON.stringify(updateProduct.tags)
+      : product.tags;
     product.material = updateProduct.material
       ? updateProduct.material
       : product.material;
@@ -197,7 +201,7 @@ export class ManageProductsService {
       ...product,
       updateProduct,
       photos: product.photos,
-      keys: product.keys,
+      keys: product.keys
     });
 
     return product;

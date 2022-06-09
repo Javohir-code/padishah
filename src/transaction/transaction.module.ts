@@ -6,6 +6,8 @@ import configuration from '../global/config/config';
 import { ClickController } from './click/controllers/click.controller';
 import { ClickService } from './click/services/click.service';
 import { TransactionEntity } from './entities/transaction.entity';
+import { PaymeController } from './payme/controllers/payme.controller';
+import { PaymeService } from './payme/services/payme.service';
 
 @Module({
   imports: [
@@ -13,8 +15,8 @@ import { TransactionEntity } from './entities/transaction.entity';
     TypeOrmModule.forFeature([TransactionEntity]),
     OrderModule
   ],
-  controllers: [ClickController],
-  providers: [ClickService],
-  exports: [TypeOrmModule.forFeature([TransactionEntity]), ClickService],
+  controllers: [ClickController, PaymeController],
+  providers: [ClickService, PaymeService],
+  exports: [TypeOrmModule.forFeature([TransactionEntity]), ClickService, PaymeService],
 })
 export class TransactionModule {}

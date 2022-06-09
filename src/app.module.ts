@@ -21,6 +21,8 @@ import { BrandModule } from './brand/brand.module';
 import { BrandEntity } from './brand/entities/brand.entity';
 import { TransactionModule } from './transaction/transaction.module';
 import { TransactionEntity } from './transaction/entities/transaction.entity';
+import { WishlistModule } from './wishlist/wishlist.module';
+import { WishlistEntity } from './wishlist/entities/wishlist.entity';
 
 const entities = [
   UserEntity,
@@ -33,6 +35,7 @@ const entities = [
   OrderEntity,
   BrandEntity,
   TransactionEntity,
+  WishlistEntity
 ];
 
 @Module({
@@ -48,9 +51,9 @@ const entities = [
         password: configService.get('database.password'),
         database: configService.get('database.database'),
         entities: entities,
-        autoLoadEntities: true,
+        autoLoadEntities: true
       }),
-      inject: [ConfigService],
+      inject: [ConfigService]
     }),
     UserModule,
     AdminModule,
@@ -61,8 +64,9 @@ const entities = [
     OrderModule,
     BrandModule,
     TransactionModule,
+    WishlistModule
   ],
   controllers: [],
-  providers: [],
+  providers: []
 })
 export class AppModule {}

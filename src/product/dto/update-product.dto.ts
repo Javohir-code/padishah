@@ -4,7 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   IsOptional,
-  IsString,
+  IsString
 } from 'class-validator';
 import { Gender } from '../enums/gender.enum';
 
@@ -92,6 +92,10 @@ export class UpdateProductDto {
   @IsArray()
   @IsOptional()
   size: Array<number>;
+
+  @IsArray()
+  @IsOptional()
+  tags: Array<string>;
 
   @IsString()
   @IsOptional()

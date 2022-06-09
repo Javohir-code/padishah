@@ -1,8 +1,7 @@
 import {
   BadRequestException,
-  ConflictException,
   Injectable,
-  NotFoundException,
+  NotFoundException
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -13,6 +12,7 @@ import fetch from 'cross-fetch';
 import { v4 as uuidv4 } from 'uuid';
 import { LoginEntity } from '../entities/login.entity';
 import { JwtService } from '@nestjs/jwt';
+import { IRequestUser } from '../interfaces/request-user.interface';
 
 @Injectable()
 export class UserService {
@@ -22,19 +22,24 @@ export class UserService {
     private readonly configService: ConfigService,
     @InjectRepository(LoginEntity)
     private loginRepository: Repository<LoginEntity>,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async addUser(
-    userDetailsDto: UserDetailsDto,
+    IUser: IRequestUser,
+    userDetailsDto: UserDetailsDto
   ): Promise<{ user: UserEntity; accessToken: string }> {
-    const foundUser = await this.findUserMsisdnWise(userDetailsDto.msisdn);
-    if (foundUser == true) {
-      const newUser = await this.userRepository.create(userDetailsDto);
-      const user = await this.userRepository.save(newUser);
+    const foundUser = await this.findUserByMsisdn(IUser.msisdn);
+    if (foundUser) {
+      foundUser.fullName = userDetailsDto.fullName;
+      foundUser.region = userDetailsDto.region;
+      foundUser.district = userDetailsDto.district;
+      foundUser.address = userDetailsDto.address;
+      foundUser.address2 = userDetailsDto.address2;
+      const user = await this.userRepository.save({ ...foundUser, foundUser });
       const payload = { msisdn: user.msisdn };
       const accessToken = await this.jwtService.sign(payload);
-      return { user: user, accessToken: accessToken };
+      return { user: foundUser, accessToken: accessToken };
     }
   }
 
@@ -54,7 +59,7 @@ export class UserService {
         login: this.configService.get('sms_service.username'),
         password: this.configService.get('sms_service.password'),
         Authorization: this.configService.get('sms_service.auth'),
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         messages: [
@@ -64,16 +69,23 @@ export class UserService {
             sms: {
               originator: this.configService.get('sms_service.orginator'),
               content: {
-                text: `Padishah code: ${code}`,
-              },
-            },
-          },
-        ],
-      }),
+                text: `Код подтверждения для Padishah: ${code}`
+              }
+            }
+          }
+        ]
+      })
     });
     const loginDto = { msisdn: msisdn, code: code };
     const newLogin = await this.loginRepository.create(loginDto);
     await this.loginRepository.save(newLogin);
+    const foundUser = await this.findUserMsisdnWise(msisdn);
+    if (foundUser == true) {
+      const user = await this.userRepository.create();
+      user.msisdn = msisdn;
+      await this.userRepository.save(user);
+    }
+
     return res;
   }
 
@@ -84,10 +96,10 @@ export class UserService {
 
   async verifyTheNumber(
     msisdn: string,
-    codeNum: number,
+    codeNum: number
   ): Promise<{ accessToken: string }> {
     const loginInfo = await this.loginRepository.findOne({
-      where: { msisdn: msisdn, code: codeNum },
+      where: { msisdn: msisdn, code: codeNum }
     });
     if (!loginInfo) throw new BadRequestException('Invalid Code!');
 
@@ -96,7 +108,7 @@ export class UserService {
     const result = await this.loginRepository.delete(loginInfo.loginId);
     if (result.affected === 0) {
       throw new NotFoundException(
-        `msisdn with "${loginInfo.loginId}" not found!`,
+        `msisdn with "${loginInfo.loginId}" not found!`
       );
     }
     return { accessToken };
@@ -104,15 +116,16 @@ export class UserService {
 
   private async findUserMsisdnWise(msisdn: string): Promise<boolean> {
     const user = await this.userRepository.findOneBy({ msisdn });
-    if (user) {
-      throw new ConflictException('Please enter another phone number');
+    if (!user) {
+      return true;
+    } else {
+      return false;
     }
-    return true;
   }
 
   async findUserByMsisdn(msisdn: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
-      where: { msisdn: msisdn },
+      where: { msisdn: msisdn }
     });
     if (!user) {
       throw new NotFoundException('user not found with given phone number');

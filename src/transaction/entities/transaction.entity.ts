@@ -3,7 +3,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
-  PrimaryGeneratedColumn,
+  PrimaryGeneratedColumn
 } from 'typeorm';
 
 import * as moment from 'moment';
@@ -18,6 +18,15 @@ export class TransactionEntity {
 
   @Column()
   userId: number;
+
+  @Column()
+  payme_tid: string;
+
+  @Column()
+  time: number;
+
+  @Column()
+  transaction: number;
 
   @Column()
   click_trans_id: number;
@@ -36,6 +45,9 @@ export class TransactionEntity {
 
   @Column()
   amount: number;
+
+  @Column()
+  create_time: number;
 
   @Column({ default: 0 })
   perform_time: number;

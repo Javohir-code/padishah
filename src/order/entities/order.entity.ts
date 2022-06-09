@@ -27,6 +27,9 @@ export class OrderEntity {
   @Column()
   productStatus: ProductStatus;
 
+  @Column({default: 0})
+  state: number;
+
   @Column({ default: 0 })
   refunded: number;
 

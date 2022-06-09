@@ -15,10 +15,6 @@ export class UserDetailsDto {
 
   @IsString()
   @IsNotEmpty()
-  msisdn: string;
-
-  @IsString()
-  @IsNotEmpty()
   region: string;
 
   @IsString()

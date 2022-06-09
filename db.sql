@@ -110,6 +110,7 @@ CREATE TABLE `ProductMast` (
     `salePrice` int NULL,
     `salePercent` int NULL,
     `size` longtext NULL,
+    `tags` longtext NULL,
     `material` varchar(500) NULL,
     `manufacturerCountry` varchar(50) NULL,
     `metadata` longtext NULL,
@@ -129,6 +130,7 @@ CREATE TABLE `OrderMast` (
     `location` varchar(500) NULL,
     `paymentStatus` varchar(50) NULL,
     `productStatus` varchar(50) NULL,
+    `state` bit NULL,
     `refunded` bit NULL,
     `currency` varchar(50) NULL,
     `paid` bit NULL,
@@ -157,12 +159,16 @@ CREATE TABLE `TransactionMast` (
     `transactionId` int AUTO_INCREMENT NOT NULL,
     `orderId` int NULL,
     `userId` int NULL,
+    `payme_tid` varchar(255) NULL,
+    `time` int NULL,
+    `transaction` int NULL,
     `click_trans_id` int NULL,
     `merchant_trans_id` varchar(255) NULL,
     `sign_time` varchar(255) NULL,
     `sign_string` varchar(255) NULL,
     `click_paydoc_id` int NULL,
     `amount` int NULL,
+    `create_time` int NULL,
     `perform_time` int NULL,
     `cancel_time` int NULL,
     `reason` varchar(500) NULL,
@@ -174,5 +180,17 @@ CREATE TABLE `TransactionMast` (
     CONSTRAINT `PK_TransactionMast` PRIMARY KEY
     (
         `transactionId` ASC
+    )
+);
+
+/****** Table: WishlistMast *****/
+CREATE Table `WishlistMast` (
+    `wishId` int AUTO_INCREMENT NOT NULL,
+    `productId` int NULL,
+    `userId` int NULL,
+    `createdAt` datetime NULL,
+    CONSTRAINT `PK_WishlistMast` PRIMARY KEY
+    (
+        `wishId` ASC
     )
 );

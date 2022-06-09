@@ -89,6 +89,10 @@ export class ProductDetailsDto {
   @IsNotEmpty()
   size: Array<number>;
 
+  @IsArray()
+  @IsOptional()
+  tags: Array<string>;
+
   @IsString()
   @IsNotEmpty()
   material: string;

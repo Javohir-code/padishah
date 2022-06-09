@@ -243,7 +243,7 @@ export class PaymeService {
         (auth = Buffer.from(auth[1], 'base64').toString('utf-8')) &&
         (auth = auth.trim().split(/ *: */)) &&
         auth[0] === 'Paycom' &&
-        auth[1] === base.configService.get('payme_service.test_key')
+        auth[1] === base.configService.get('payme_service.merchant_id')
       );
     }
 

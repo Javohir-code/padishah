@@ -232,6 +232,7 @@ export class PaymeService {
 
     function checkAuth(auth: any) {
       console.log('auth: ', auth);
+      console.log('base', base);
       console.log(base.configService.get('payme_service.merchant_id'));
       console.log(base.configService.get('payme_service.test_key'));
       return (

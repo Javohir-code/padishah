@@ -29,6 +29,7 @@ export class PaymeService {
     }
 
     if (!checkAuth(req.headers['authorization'])) {
+      console.log('not auth');
       return sendResponse(RPCErrors.AccessDenied(), null);
     }
 
@@ -230,16 +231,18 @@ export class PaymeService {
     }
 
     function checkAuth(auth: any) {
-      console.log(auth);
+      console.log('auth: ', auth);
+      console.log(base.configService.get('payme_service.merchant_id'));
+      console.log(base.configService.get('payme_service.test_key'));
       return (
-        auth && //проверяем существование заголовка
-        (auth = auth.trim().split(/ +/)) && //разделяем заголовок на 2 части
+        auth &&
+        (auth = auth.trim().split(/ +/)) &&
         auth[0] === 'Basic' &&
-        auth[1] && //проверяем правильность формата заголовка
-        (auth = Buffer.from(auth[1], 'base64').toString('utf-8')) && //декодируем из base64
-        (auth = auth.trim().split(/ *: */)) && //разделяем заголовок на логин пароль
-        auth[0] === 'Paycom' && //проверяем логин
-        auth[1] === base.configService.get('payme_service.merchant_id')
+        auth[1] &&
+        (auth = Buffer.from(auth[1], 'base64').toString('utf-8')) &&
+        (auth = auth.trim().split(/ *: */)) &&
+        auth[0] === 'Paycom' &&
+        auth[1] === base.configService.get('payme_service.test_key')
       );
     }
 

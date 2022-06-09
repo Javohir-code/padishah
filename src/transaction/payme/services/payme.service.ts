@@ -254,12 +254,14 @@ export class PaymeService {
 
       console.log('sendResponse error', error);
       console.log('sendResponse result', result);
-      res.json({
-        jsonrpc: '2.0',
-        error: error || undefined,
-        result: result || undefined,
-        id: body.id
-      });
+      res.end(
+        JSON.stringify({
+          jsonrpc: '2.0',
+          error: error || undefined,
+          result: result || undefined,
+          id: body.id
+        })
+      );
     }
   }
 }

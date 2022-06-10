@@ -1,5 +1,6 @@
 import { Controller, Get, Param, ParseIntPipe, Query } from '@nestjs/common';
 import { PaginationParams } from 'src/global/dto/pagination.dto';
+import { SortingParams } from 'src/global/dto/sorting.dto';
 import { ProductEntity } from '../entities/product.entity';
 import { ProductService } from '../services/product.service';
 
@@ -9,9 +10,18 @@ export class ProductController {
 
   @Get('products-list')
   async getProductsList(
-    @Query() { page, limit }: PaginationParams
-  ): Promise<ProductEntity[] | { products: ProductEntity[]; count: number }> {
-    return await this.productService.getProductsList(page, limit);
+    @Query() { page, limit }: PaginationParams,
+    @Query() { from, to, color, size, categoryId }: SortingParams
+  ) {
+    return await this.productService.getProductsList(
+      page,
+      limit,
+      from,
+      to,
+      color,
+      size,
+      categoryId
+    );
   }
 
   @Get(':productId')

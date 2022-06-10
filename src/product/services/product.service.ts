@@ -16,10 +16,17 @@ export class ProductService {
 
   async getProductsList(
     page?: number,
-    limit?: number
-  ): Promise<ProductEntity[] | { products: ProductEntity[]; count: number }> {
+    limit?: number,
+    from?: number,
+    to?: number,
+    color?: string,
+    size?: number,
+    categoryId?: number
+  ) {
+    const result = [];
+    const sorted = [];
     if (!page && !limit) {
-      return await this.productRepository
+      const products = await this.productRepository
         .createQueryBuilder('P')
         .leftJoin(CategoryEntity, 'C', 'C.categoryId = P.categoryId')
         .leftJoin(SubCategoryEntity, 'S', 'S.subCategoryId = P.subCategoryId')
@@ -34,6 +41,37 @@ export class ProductService {
         ])
         .orderBy('P.createdAt', 'DESC')
         .getRawMany();
+
+      if (categoryId) {
+        if (products.length > 0) {
+          products.forEach((product) => {
+            if (product.categoryId == categoryId) {
+              sorted.push(product);
+            }
+          });
+        } else if (products.length == 0) return products;
+      }
+
+      if (from || to) {
+        if (!categoryId) {
+          to = to ? to : 999999999999;
+          for (let i = 0; i < products.length; i++) {
+            if (products[i].price >= from && products[i].price <= to) {
+              result.push(products[i]);
+            }
+          }
+          return result;
+        } else if (categoryId) {
+          to = to ? to : 999999999999;
+          for (let i = 0; i < sorted.length; i++) {
+            if (sorted[i].price >= from && sorted[i].price <= to) {
+              result.push(sorted[i]);
+            }
+          }
+          return result;
+        }
+      }
+      return sorted;
     }
 
     const [products, count] = await Promise.all([
@@ -58,7 +96,36 @@ export class ProductService {
       this.productRepository.count()
     ]);
 
-    return { products: products, count: count };
+    if (categoryId) {
+      if (products.length > 0) {
+        products.forEach((product) => {
+          if (product.categoryId == categoryId) {
+            sorted.push(product);
+          }
+        });
+      } else if (products.length == 0) return products;
+    }
+
+    if (from || to) {
+      if (!categoryId) {
+        to = to ? to : 999999999999;
+        for (let i = 0; i < products.length; i++) {
+          if (products[i].price >= from && products[i].price <= to) {
+            result.push(products[i]);
+          }
+        }
+        return result;
+      } else if (categoryId) {
+        to = to ? to : 999999999999;
+        for (let i = 0; i < sorted.length; i++) {
+          if (sorted[i].price >= from && sorted[i].price <= to) {
+            result.push(sorted[i]);
+          }
+        }
+        return result;
+      }
+    }
+    return sorted;
   }
 
   async getProductById(productId: number): Promise<ProductEntity> {

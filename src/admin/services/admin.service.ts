@@ -15,7 +15,7 @@ export class AdminService {
   constructor(
     @InjectRepository(AdminEntity)
     private adminRepository: Repository<AdminEntity>,
-    private readonly jwtService: JwtService,
+    private readonly jwtService: JwtService
   ) {}
 
   async registerAdmin(adminDetailsDto: AdminDetailsDto): Promise<AdminEntity> {
@@ -29,20 +29,20 @@ export class AdminService {
     if (admin && compareSync(adminLoginDto.password, admin.password)) {
       const payload = {
         id: admin.id,
-        email: admin.email,
+        email: admin.email
       };
 
       return {
         firstName: admin.firstName,
         lastName: admin.lastName,
         email: admin.email,
-        token: this.jwtService.sign(payload),
+        token: this.jwtService.sign(payload)
       };
     }
 
     throw new BadRequestException({
       message:
-        'Either Email or Password incorrect, Please check your credentials.',
+        'Either Email or Password incorrect, Please check your credentials.'
     });
   }
 
@@ -59,7 +59,7 @@ export class AdminService {
     firstName?: string,
     lastName?: string,
     email?: string,
-    password?: string,
+    password?: string
   ): Promise<IAdmin> {
     const admin = await this.findAdminById(id);
     admin.firstName = firstName ? firstName : admin.firstName;
